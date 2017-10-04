@@ -20,9 +20,11 @@ SSH into you Raspberry Pi (requires Avahi daemon)
 $ ssh raspberrypi.local
 ```
 
-Install dependencies
+Clone repo into Raspi and install dependencies
 
 ```sh
+$ git clone git@github.com:jounile/aws-iot-twitter-stream.git
+$ cd aws-iot-twitter-stream/raspberrypi
 $ npm install
 ```
 
