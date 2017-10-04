@@ -6,7 +6,7 @@ var AWS = require('aws-sdk');
 var dynamo = new AWS.DynamoDB.DocumentClient();
 var table = "iotMessages";
 
-exports.handler = function(event, context) {
+module.exports.create = (event, context, cb) => {
 
     console.log('Received event:', JSON.stringify(event, null, 2));
 
@@ -32,4 +32,4 @@ exports.handler = function(event, context) {
             context.succeed();
         }
     });
-}
+};

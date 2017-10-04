@@ -1,0 +1,70 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  EventSaveLambda:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'event-save-handler.create'
+      Runtime: 'nodejs6.10'
+      Policies:
+      - Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action: 'iot:Publish'
+          Resource: !Sub 'arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/event/*'
+      Events:
+        IoT:
+          Type: IoTRule
+          Properties:
+            Sql: "SELECT * FROM 'topic1'"
+            AwsIotSqlVersion: '2016-03-23'
+  EventTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: timestamp
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+      - AttributeName: timestamp
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  EventTableRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: 'Allow'
+          Principal:
+            Service: 'iot.amazonaws.com'
+          Action: 'sts:AssumeRole'
+      Policies:
+      - PolicyName: 'dynamodb'
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action: 'dynamodb:PutItem'
+            Resource: !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${EventTable}'
+  EventTableRule:
+    Type: 'AWS::IoT::TopicRule'
+    Properties:
+      TopicRulePayload:
+        Actions:
+        - DynamoDB:
+            HashKeyField: id
+            HashKeyValue: '${id}'
+            RangeKeyField: timestamp # unfortunately this field is required by CloudFormation
+            RangeKeyValue: '${timestamp()}' # unfortunately this field is required by CloudFormation
+            RoleArn: !GetAtt 'EventTableRole.Arn'
+            TableName: !Ref EventTable
+        RuleDisabled: false
+        Sql: "SELECT * FROM 'topic1'"
+
