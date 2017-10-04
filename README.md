@@ -50,12 +50,6 @@ $ node publish.js
 Remove the stack
 
 ```sh
-$ aws cloudformation delete-stack --stack-name jouni-iot-demo-stack
+$ ./undeploy.sh
 ```
-Remove the artifacts bucket
-
-```sh
-$ aws s3 rb s3://iot-artifacts --force
-```
-
 
