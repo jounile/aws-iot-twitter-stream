@@ -43,3 +43,19 @@ Start fetching tweets
 ```sh
 $ node publish.js
 ```
+
+
+## Cleanup
+
+Remove the stack
+
+```sh
+$ aws cloudformation delete-stack --stack-name sam-iot-example
+```
+Remove the artifacts bucket
+
+```sh
+$ aws s3 rb s3://iot-artifacts --force
+```
+
+
