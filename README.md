@@ -47,7 +47,7 @@ $ node publish.js
 
 ## Cleanup
 
-Remove the stack
+Remove the stack and S3 bucket
 
 ```sh
 $ ./undeploy.sh
