@@ -2,7 +2,7 @@
 
 ---
 
-## Developer computer
+## Setup cloud resources
 
 Deploy IoT service and DynamoDB table with other resources
 
