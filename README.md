@@ -34,6 +34,10 @@ Download certificates
 $ aws s3 cp s3://my-certs-bucket ./certs/ --recursive
 ```
 
+Update IoT host address in publish.sh
+
+Update twitter keys in publish.sh
+
 Start fetching tweets
 
 ```sh
