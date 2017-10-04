@@ -50,7 +50,7 @@ $ node publish.js
 Remove the stack
 
 ```sh
-$ aws cloudformation delete-stack --stack-name sam-iot-example
+$ aws cloudformation delete-stack --stack-name jouni-iot-demo-stack
 ```
 Remove the artifacts bucket
 
