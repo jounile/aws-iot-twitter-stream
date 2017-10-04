@@ -2,28 +2,38 @@
 
 ---
 
-# Developer computer
+## Developer computer
 
-## Deploy IoT service and DynamoDB table with other resources
+Deploy IoT service and DynamoDB table with other resources
 
+```sh
 $ ./deploy.sh
+```
 
 ---
 
-# Raspberry Pi
+## Raspberry Pi
 
-## SSH into you Raspberry Pi (requires Avahi daemon)
+SSH into you Raspberry Pi (requires Avahi daemon)
 
-ssh raspberrypi.local
+```sh
+$ ssh raspberrypi.local
+```
 
-## Install dependencies
+Install dependencies
 
+```sh
 $ npm install
+```
 
-## Download certificates
+Download certificates
 
+```sh
 $ aws s3 cp s3://my-certs-bucket ./certs/ --recursive
+```
 
-## Start fetching tweets
+Start fetching tweets
 
+```sh
 $ node publish.js
+```
